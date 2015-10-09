@@ -19,9 +19,13 @@ $postcode = PostCodeDB::getPostCode($id);
 <?php include './view/header.php'; ?>
 <div id="main">
     <?php
-    echo $postcode->getPostcode() . "<br>";
+    echo $postcode->getID() . "<br>";
+    echo $postcode->getPostCode() . "<br>";
     echo $postcode->getSuburb() . "<br>";
     echo $postcode->getState() . "<br>";
+    echo $postcode->getLat() . "<br>";
+    echo $postcode->getLng() . "<br>";
+    
     ?>
 </div>
 <?php include './view/footer.php'; ?>

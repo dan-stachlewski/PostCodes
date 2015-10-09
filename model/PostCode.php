@@ -38,7 +38,7 @@ class PostCode {
     
     /* DO NOT CREATE SETTER FOR $id */
     
-    public function getPostcode() {
+    public function getPostCode() {
         return $this->postcode;
     }
     
