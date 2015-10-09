@@ -4,11 +4,33 @@
  */
 class PostCodeDB {
 
+
+    /**
+     * This function retrieves all the postcode records from the database
+     * @return type Array
+     */
+    public static function getAllPostCodes() {
+        $db = Database::getDB();
+        $query = "SELECT *   
+                  FROM postcodes";
+        try {
+            $stmnt = $db->query($query);
+            $result = $stmnt->fetchAll();
+            $stmnt->closeCursor();
+            return $result;
+        } catch (PDOException $e) {
+            $error_message = $e->getMessage();
+            display_db_error($error_message);
+        }
+                
+    }
+    
+    
     /**
      * This function retrieves all the data for $id and returns the PostCode
      * associated with the $id
      * @param type $id
-     */
+     */    
     public static function getPostCode($id) {
         //Connect to dBase using Scope Resolution Operator
         $db = Database::getDB();

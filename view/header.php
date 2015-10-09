@@ -6,6 +6,32 @@
         <title>Postcodes Application</title>
 
     </head>
+    <style>
+        table, td, th {
+            border: 1px solid blue;
+            padding: 15px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #6666ff;
+            color: white;
+            height: 50px;
+            
+            
+        }
+        td {
+            vertical-align: center;
+            
+        }
+        table {
+            border-collapse: collapse;
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        }
+        strong {
+            color: blue;
+        }
+    </style>
 
     <!-- the body section -->
     <body>
