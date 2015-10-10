@@ -105,27 +105,80 @@ class PostCodeDB {
                   FROM postcodes
                   WHERE postcode = :postcode";
         try {
-            $stmnt->$db->prepare($query);
+            $stmnt = $db->prepare($query);
             $stmnt->bindValue(':postcode', $postcode, PDO::PARAM_INT);
             $stmnt->execute();
-            $result = $stmnt->fetchAll();
-            $stmnt->colseCursor();
+            $records = $stmnt->fetchAll();
+            $stmnt->closeCursor();
             $results = array();
-            foreach($result as $resolt){
-                $results[] = new PostCode($resolt['id'],
-                                          $resolt['postcode'],
-                                          $resolt['suburb'],
-                                          $resolt['lat'],
-                                          $resolt['lng']);
+            foreach($records as $r){
+                $results[] = new PostCode($r['id'],
+                                          $r['postcode'],
+                                          $r['suburb'],
+                                          $r['state'],
+                                          $r['lat'],
+                                          $r['lng']);
             }
             return $results;
         } catch (PDOException $e) {
             $error_message = $e->getMessage();
             display_db_error($error_message);
         }
-        
     }
 
+
+    /**
+     * This funtion retrieves postcode by matching the $state.
+     * @param type $state
+     * @return \PostCode
+     */
+    public static function get_postcodes_by_state($state) {
+        $db = Database::getDB();
+        $query = "SELECT *
+                  FROM postcodes
+                  WHERE state LIKE :%state%";
+        try {
+            $stmnt = $db->prepare($query);
+            $stmnt->bindValue(':state', $state, PDO::PARAM_STR);
+            $stmnt->execute();
+            $records = $stmnt->fetchAll();
+            $stmnt->closeCursor();
+            $results = array();
+            foreach($records as $r){
+                $results[] = new PostCode($r['id'],
+                                          $r['postcode'],
+                                          $r['suburb'],
+                                          $r['state'],
+                                          $r['lat'],
+                                          $r['lng']);
+            }
+            return $results;
+        } catch (PDOException $e) {
+            $error_message = $e->getMessage();
+            display_db_error($error_message);
+        }
+    }
+
+        public static function postcodes_for_search() {
+        $db = Database::getDB();
+        $query = "SELECT * FROM postcodes_no_duplicates";
+        try {
+        $stmnt = $db->prepare($query);
+        $stmnt->execute();
+        $records = $stmnt->fetchAll();
+        $stmnt->closeCursor();
+        $results = array();
+        foreach($records as $r) {
+            $results[] = new PostCodeSearch($r['id'],
+                                          $r['postcode']);
+            }
+            return $results;
+        } catch (PDOException $e) {
+            $error_message = $e->getMessage();
+            display_db_error($error_message);
+        }
+                
+    }
+    
+    
 }//END class PostCode
-
-

@@ -2,7 +2,7 @@
 
 class Database {
     //SET the dBase connection vars
-    private static $dsn = 'mysql:host=localhost;dbname=postcodes';
+    private static $dsn = 'mysql:host=localhost;dbname=postcode';
     private static $username = 'root';
     private static $password = 'password';
     private static $db;

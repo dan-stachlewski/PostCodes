@@ -1,6 +1,7 @@
 <?php
 require('./model/database.php');
 require('./model/PostCode.php');
+require('./model/PostCodeSearch.php');
 require('./model/PostCodeDB.php');
 ?>
 
@@ -84,6 +85,63 @@ $postcode = PostCodeDB::getPostCode($id);
     echo "</table><!-- END table -->";
 ?>
 </div><!-- END section-3 -->
+
+<!-- Section-4 --> 
+
+<div id="section-4">
+
+<?php
+
+$pcode = 810;
+$newPostCodes = PostCodeDB::get_postcodes_by_postcode($pcode);
+?>
+    
+<h2>Example of how to Retrieve a Single Record from a Static Method <br /> 
+w a Hard Coded: <strong>$pcode = <?= $pcode; ?></strong> in a Table</h2>
+    
+<?php
+//echo "<pre>";
+//var_dump($newPostCodes);
+//echo "</pre>";
+
+echo "<table>";
+    echo "<tr>";
+        echo "<th>" . "Postcode Id:" . "</th>";
+        echo "<th>" . "Postcode:" . "</th>";
+        echo "<th>" . "Suburb:" . "</th>";
+        echo "<th>" . "State:" . "</th>";
+        echo "<th>" . "Latitude:" . "</th>";
+        echo "<th>" . "Longitude:" . "</th>";
+    echo "</tr>";
+foreach ($newPostCodes as $postCode) {
+    echo "<tr>";
+        echo "<td>" . $postCode->getID() . "</td>";
+        echo "<td>" . $postCode->getPostCode() . "</td>";
+        echo "<td>" . $postCode->getSuburb() . "</td>";
+        echo "<td>" . $postCode->getState() . "</td>";
+        echo "<td>" . $postCode->getLat() . "</td>";
+        echo "<td>" . $postCode->getLng() . "</td>";
+    echo "</tr>";
+}
+  echo "</table><!-- END table -->";
+?>
+<h2>Example of how to Retrieve a Single Record from a Static Method <br /> 
+    w a Hard Coded: <strong>$pcode = <?= $pcode; ?></strong> in an Unordered List.</h2>
+<?php
+
+foreach ($newPostCodes as $postCode) {
+    echo "<ul>";
+    echo "<li><span>ID: </span>" . $postCode->getID() . "</li>";
+    echo "<li><span>PostCode: </span>" . $postCode->getPostCode() . "</li>";
+    echo "<li><span>Suburb: </span>" . $postCode->getSuburb() . "</li>";
+    echo "<li><span>State: </span>" . $postCode->getState() . "</li>";
+    echo "<li><span>Latitude: </span>" . $postCode->getLat() . "</li>";
+    echo "<li><span>Longitude: </span>" . $postCode->getLng() . "</li>";
+    echo "</ul>";
+}
+
+?>
+</div><!-- END section-4 -->
 
 <?php include './view/footer.php'; ?>
 
