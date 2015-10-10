@@ -2,30 +2,36 @@
 require('./model/database.php');
 require('./model/PostCode.php');
 require('./model/PostCodeDB.php');
+?>
 
+<?php include './view/header.php'; ?>
+<!-- Section-1 -->        
+
+<div id="section-1">
+    <?php
 /*
  * Add all data from csv file, see files directory 
  * Test all db functions 
  * get maps to dispaly a suburb from a database
  */
-?>
+$lines = file('./docs/files/data/postcodes_small.csv');
 
-<?php include './view/header.php';?>
-<div id="main">
-<?php
-$id = 1;
-$postcode = PostCodeDB::getPostCode($id);
-echo "<pre>";
-print_r($postcode);
-echo "</pre>";
- 
-echo "<strong>Postcode Id:</strong> " . $postcode->getID() . "<br>";
-echo "<strong>Postcode:</strong> " . $postcode->getPostCode() . "<br>";
-echo "<strong>Suburb:</strong> " . $postcode->getSuburb() . "<br>";
-echo "<strong>State:</strong> " . $postcode->getState() . "<br>";
-echo "<strong>Latitude:</strong> " . $postcode->getLat() . "<br>";
-echo "<strong>Longitude:</strong> " . $postcode->getLng() . "<br><br>";
+foreach($lines as $line) {
+    if (substr($line, 0, strlen('postcode')) == 'postcode')
+        //Ignore the 1st line w Headers
+        continue;
+        //Postcode's id set to zero, it will be ignored when data saved to dBase
+        PostCodeDB::add(PostCode::fromCSV('0,' . $line));
 
+}
+    ?>
+</div><!-- END section-1 -->
+
+<!-- Section-2 -->
+
+<div id="section-2">
+    <h2>Postcodes Imported from CSV File displayed to prove it worked.</h2>
+    <?php
 /* THIS CODE PRINTS OUT THE ENTIRE POSTCODE DATABASE */
 $postcode = PostCodeDB::getAllPostCodes();
 echo "<table>";
@@ -47,8 +53,37 @@ foreach ($postcode as $pc) {
         echo "<td>" . $pc['lng'] . "</td>";
     echo "</tr>";
 }
-  echo "<table>";
-    ?>
-</div>
+  echo "</table><!-- END table -->";
+?>
+</div><!-- END section-2 -->
+
+<!-- Section-3 --> 
+
+<div id="section-3">
+<?php
+
+$id = 1;
+$postcode = PostCodeDB::getPostCode($id);
+
+?>
+    <h2>Example of how to Retrieve a Single Record from a Static Method <br /> w a Hard Coded: <strong>$id = <?= $id; ?></strong></h2>
+    <?php
+    echo "<table>";
+        echo "<tr>";
+            echo "<td><strong>Postcode:</strong></td>";
+            echo "<td>" . $postcode->getPostcode() . "</td>";
+        echo "</tr>";
+        echo "<tr>";
+            echo "<td><strong>Suburb:</th></strong>";
+            echo "<td>" . $postcode->getSuburb() . "</td>";
+        echo "</tr>";
+        echo "<tr>";
+            echo "<td><strong>State:</td></strong>";
+            echo "<td>" . $postcode->getState() . "</td>";
+        echo "</tr>";
+    echo "</table><!-- END table -->";
+?>
+</div><!-- END section-3 -->
+
 <?php include './view/footer.php'; ?>
 

@@ -24,7 +24,7 @@ class Database {
                 exit();
             }
         }
-        echo "Database connected Successfully!";
+        //echo "<h2>Database CONNECTED Successfully!</h2>";
         return self::$db;
     }//END public static function getDB
 

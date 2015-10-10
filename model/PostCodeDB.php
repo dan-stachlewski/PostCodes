@@ -22,10 +22,8 @@ class PostCodeDB {
             $error_message = $e->getMessage();
             display_db_error($error_message);
         }
-                
-    }
-    
-    
+    }//END public static function getAllPostCodes
+   
     /**
      * This function retrieves all the data for $id and returns the PostCode
      * associated with the $id
@@ -81,9 +79,14 @@ class PostCodeDB {
             $stmnt->bindValue(':suburb', $p->getSuburb(), PDO::PARAM_STR);
             $stmnt->bindValue('state', $p->getState(), PDO::PARAM_STR);
             $stmnt->bindValue(':lat', $p->getLat(), PDO::PARAM_STR);
-            $stmnt->bindValue(':lng', $p->getLng(), POD::PARAM_STR);
+            $stmnt->bindValue(':lng', $p->getLng(), PDO::PARAM_STR);
             $stmnt->execute();
+            /*
+            echo "<pre>";
             var_dump($p);
+            echo "</pre>";
+            echo "<h2>Record ADDED Successfully!</h2>";
+             */
         } catch (PDOException $e) {
             $error_message = $e->getMessage();
             echo $error_message;

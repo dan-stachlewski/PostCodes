@@ -5,6 +5,8 @@
  * This class is responsible for storing information about a single postcode
  * Ref: http://russellscottwalker.blogspot.com.au/2013/09/public-properties-getters-and-setters.html
  * Printed out .pdf saved to docs file.
+ * This class defines 6 fields $id, $postcode, $suburb, $state, $lat, $lng
+ * 
  */
 class PostCode {
     private $id;
